@@ -1,0 +1,27 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: portworx-postgres
+spec:
+  volumes:
+    - name: portworx
+      persistentVolumeClaim:
+        claimName: test-pvc
+  securityContext:
+    allowPrivilegeEscalation: false
+    runAsUser: 0
+  containers:
+    - name: postgresql
+      image: postgres:10.15-alpine
+      env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres12345
+      ports:
+        - name: postgresql
+          containerPort: 5432
+          protocol: TCP
+      volumeMounts:
+        - name: portworx
+          mountPath: /var/lib/pgsql/data

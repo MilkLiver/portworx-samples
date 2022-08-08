@@ -1,0 +1,9 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: portworx-proxy-nfs
+provisioner: kubernetes.io/portworx-volume
+parameters:
+  mount_options: vers=4.0
+  proxy_endpoint: 'nfs://<NFS Server IP>'
+  proxy_nfs_exportpath: <Export Path>

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+   name: portworx-static-pod
+spec:
+  containers:
+  - image: nginx
+    name: portworx-static-pod
+    volumeMounts:
+    - mountPath: /portworx-volume-test
+      name: portworx
+  volumes:
+  - name: portworx
+    persistentVolumeClaim:
+      claimName: portworx-static-pvc
