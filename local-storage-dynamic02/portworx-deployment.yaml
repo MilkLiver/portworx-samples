@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portworx-test02
+  labels:
+    name: portworx-test02
+    app: portworx-test02
+
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: portworx-test02
+
+  template:
+    metadata:
+      labels:
+        app: portworx-test02
+    spec:
+      containers:
+        - name: portworx-test02
+          image: docker.io/milkliver/deploy-test:latest
+          ports:
+            - name: deploy-test
+              containerPort: 19527
+              protocol: TCP
+
+          volumeMounts:
+            - name: portworx
+              mountPath: /tmp/portworxtest
+
+      volumes:
+      - name: portworx
+        persistentVolumeClaim:
+          claimName: test-pvc02
